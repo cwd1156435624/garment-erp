@@ -1,0 +1,6863 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
+paths:
+  /api/users/:
+    get:
+      operationId: listUsers
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserList'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createUser
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/users/profile/:
+    get:
+      operationId: profileUser
+      description: "\u83B7\u53D6\u5F53\u524D\u7528\u6237\u4FE1\u606F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/users/{id}/:
+    get:
+      operationId: retrieveUser
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7528\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateUser
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7528\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateUser
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7528\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyUser
+      description: "\u7528\u6237\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u7528\u6237\u7684\
+        \u589E\u5220\u6539\u67E5\u3001\u767B\u5F55\u3001\u6CE8\u518C\u7B49\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7528\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment/:
+    get:
+      operationId: listEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment/{id}/:
+    get:
+      operationId: retrieveEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BBE\u5907."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BBE\u5907."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BBE\u5907."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyEquipment
+      description: "\u8BBE\u5907\u7BA1\u7406\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u8BBE\
+        \u5907\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BBE\u5907."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-maintenance/:
+    get:
+      operationId: listMaintenanceRecords
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MaintenanceRecord'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createMaintenanceRecord
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceRecord'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-maintenance/{id}/:
+    get:
+      operationId: retrieveMaintenanceRecord
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EF4\u62A4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceRecord'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateMaintenanceRecord
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EF4\u62A4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceRecord'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateMaintenanceRecord
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EF4\u62A4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MaintenanceRecord'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceRecord'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyMaintenanceRecord
+      description: "\u8BBE\u5907\u7EF4\u62A4\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\
+        \u4F9B\u7EF4\u62A4\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EF4\u62A4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-fault/:
+    get:
+      operationId: listFaultRecords
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createFaultRecord
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-fault/statistics/:
+    get:
+      operationId: statisticsFaultRecord
+      description: "\u83B7\u53D6\u6545\u969C\u7EDF\u8BA1\u4FE1\u606F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-fault/{id}/:
+    get:
+      operationId: retrieveFaultRecord
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateFaultRecord
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateFaultRecord
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyFaultRecord
+      description: "\u6545\u969C\u8BB0\u5F55\u89C6\u56FE\u96C6\n\u63D0\u4F9B\u6545\
+        \u969C\u8BB0\u5F55\u7684\u589E\u5220\u6539\u67E5\u529F\u80FD"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/customer/customers/:
+    get:
+      operationId: listCustomers
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createCustomer
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+  /api/customer/customers/{id}/:
+    get:
+      operationId: retrieveCustomer
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5BA2\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateCustomer
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5BA2\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateCustomer
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5BA2\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyCustomer
+      description: "\u5BA2\u6237\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5BA2\u6237."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/customer/task-reminders/:
+    get:
+      operationId: listTaskReminders
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createTaskReminder
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+  /api/customer/task-reminders/{id}/:
+    get:
+      operationId: retrieveTaskReminder
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4EFB\u52A1\u63D0\u9192\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateTaskReminder
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4EFB\u52A1\u63D0\u9192\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateTaskReminder
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4EFB\u52A1\u63D0\u9192\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyTaskReminder
+      description: "\u4EFB\u52A1\u63D0\u9192\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4EFB\u52A1\u63D0\u9192\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/employee/employees/:
+    get:
+      operationId: listEmployees
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createEmployee
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+  /api/employee/employees/{id}/:
+    get:
+      operationId: retrieveEmployee
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5458\u5DE5."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateEmployee
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5458\u5DE5."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateEmployee
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5458\u5DE5."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyEmployee
+      description: "\u5458\u5DE5\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5458\u5DE5."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/employee/attendance/:
+    get:
+      operationId: listAttendances
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createAttendance
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+  /api/employee/attendance/{id}/:
+    get:
+      operationId: retrieveAttendance
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8003\u52E4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateAttendance
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8003\u52E4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateAttendance
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8003\u52E4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyAttendance
+      description: "\u8003\u52E4\u8BB0\u5F55\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8003\u52E4\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/employee/performance/:
+    get:
+      operationId: listPerformanceEvaluations
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PerformanceEvaluation'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createPerformanceEvaluation
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceEvaluation'
+          description: ''
+      tags:
+      - api
+  /api/employee/performance/{id}/:
+    get:
+      operationId: retrievePerformanceEvaluation
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EE9\u6548\u8BC4\u4F30\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceEvaluation'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updatePerformanceEvaluation
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EE9\u6548\u8BC4\u4F30\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceEvaluation'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdatePerformanceEvaluation
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EE9\u6548\u8BC4\u4F30\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PerformanceEvaluation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceEvaluation'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyPerformanceEvaluation
+      description: "\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u7EE9\u6548\u8BC4\u4F30\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/finance/factory-settlements/:
+    get:
+      operationId: listFactorySettlements
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createFactorySettlement
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+  /api/finance/factory-settlements/{id}/:
+    get:
+      operationId: retrieveFactorySettlement
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5DE5\u5382\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateFactorySettlement
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5DE5\u5382\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateFactorySettlement
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5DE5\u5382\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyFactorySettlement
+      description: "\u5DE5\u5382\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5DE5\u5382\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/finance/outsource-settlements/:
+    get:
+      operationId: listOutsourceSettlements
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createOutsourceSettlement
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+  /api/finance/outsource-settlements/{id}/:
+    get:
+      operationId: retrieveOutsourceSettlement
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5916\u53D1\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateOutsourceSettlement
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5916\u53D1\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateOutsourceSettlement
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5916\u53D1\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyOutsourceSettlement
+      description: "\u5916\u53D1\u7ED3\u7B97\u5355\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5916\u53D1\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/finance/payments/:
+    get:
+      operationId: listPayments
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createPayment
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+  /api/finance/payments/{id}/:
+    get:
+      operationId: retrievePayment
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4ED8\u6B3E\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updatePayment
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4ED8\u6B3E\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdatePayment
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4ED8\u6B3E\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyPayment
+      description: "\u4ED8\u6B3E\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4ED8\u6B3E\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/finance/cost-calculations/:
+    get:
+      operationId: listCostCalculations
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CostCalculation'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createCostCalculation
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostCalculation'
+          description: ''
+      tags:
+      - api
+  /api/finance/cost-calculations/{id}/:
+    get:
+      operationId: retrieveCostCalculation
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6210\u672C\u6838\u7B97\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostCalculation'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateCostCalculation
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6210\u672C\u6838\u7B97\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostCalculation'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateCostCalculation
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6210\u672C\u6838\u7B97\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CostCalculation'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostCalculation'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyCostCalculation
+      description: "\u6210\u672C\u6838\u7B97\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6210\u672C\u6838\u7B97\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/production/orders/:
+    get:
+      operationId: listOrders
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createOrder
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+  /api/production/orders/{id}/:
+    get:
+      operationId: retrieveOrder
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BA2\u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateOrder
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BA2\u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateOrder
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BA2\u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyOrder
+      description: "\u8BA2\u5355\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BA2\u5355."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/production/production-plans/:
+    get:
+      operationId: listProductionPlans
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createProductionPlan
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+  /api/production/production-plans/{id}/:
+    get:
+      operationId: retrieveProductionPlan
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateProductionPlan
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateProductionPlan
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyProductionPlan
+      description: "\u751F\u4EA7\u8BA1\u5212\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/production/cutting-tasks/:
+    get:
+      operationId: listCuttingTasks
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createCuttingTask
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+  /api/production/cutting-tasks/{id}/:
+    get:
+      operationId: retrieveCuttingTask
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateCuttingTask
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateCuttingTask
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyCuttingTask
+      description: "\u88C1\u526A\u4EFB\u52A1\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/production/exceptions/:
+    get:
+      operationId: listProductionExceptions
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createProductionException
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+  /api/production/exceptions/{id}/:
+    get:
+      operationId: retrieveProductionException
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u5F02\u5E38\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateProductionException
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u5F02\u5E38\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateProductionException
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u5F02\u5E38\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyProductionException
+      description: "\u751F\u4EA7\u5F02\u5E38\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u5F02\u5E38\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/production/batches/:
+    get:
+      operationId: listBatches
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createBatch
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+  /api/production/batches/{id}/:
+    get:
+      operationId: retrieveBatch
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateBatch
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateBatch
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyBatch
+      description: "\u751F\u4EA7\u6279\u6B21\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/supplier/suppliers/:
+    get:
+      operationId: listSuppliers
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createSupplier
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+  /api/supplier/suppliers/{id}/:
+    get:
+      operationId: retrieveSupplier
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateSupplier
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateSupplier
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroySupplier
+      description: "\u4F9B\u5E94\u5546\u7BA1\u7406\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/supplier/performances/:
+    get:
+      operationId: listSupplierPerformances
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupplierPerformance'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createSupplierPerformance
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierPerformance'
+          description: ''
+      tags:
+      - api
+  /api/supplier/performances/{id}/:
+    get:
+      operationId: retrieveSupplierPerformance
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u7EE9\
+          \u6548."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierPerformance'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateSupplierPerformance
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u7EE9\
+          \u6548."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierPerformance'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateSupplierPerformance
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u7EE9\
+          \u6548."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierPerformance'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierPerformance'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroySupplierPerformance
+      description: "\u4F9B\u5E94\u5546\u7EE9\u6548\u8BC4\u4F30\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u7EE9\
+          \u6548."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/supplier/contracts/:
+    get:
+      operationId: listSupplierContracts
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - count
+                - results
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createSupplierContract
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+  /api/supplier/contracts/{id}/:
+    get:
+      operationId: retrieveSupplierContract
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u5408\
+          \u540C."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateSupplierContract
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u5408\
+          \u540C."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateSupplierContract
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u5408\
+          \u540C."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroySupplierContract
+      description: "\u4F9B\u5E94\u5546\u5408\u540C\u89C6\u56FE\u96C6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u5408\
+          \u540C."
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/system/metrics/:
+    get:
+      operationId: listMetrics
+      description: "Prometheus\u6307\u6807\u5BFC\u51FA\u89C6\u56FE\n\n\u63D0\u4F9B\
+        Prometheus\u76D1\u63A7\u6307\u6807\u7684\u5BFC\u51FA\u63A5\u53E3\uFF0C\u7528\
+        \u4E8E\u76D1\u63A7\u7CFB\u7EDF\u8FD0\u884C\u72B6\u6001"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/token/:
+    post:
+      operationId: createTokenObtainPair
+      description: 'Takes a set of user credentials and returns an access and refresh
+        JSON web
+
+        token pair to prove the authentication of those credentials.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+      tags:
+      - api
+  /api/token/refresh/:
+    post:
+      operationId: createTokenRefresh
+      description: 'Takes a refresh type JSON web token and returns an access type
+        JSON web
+
+        token if the refresh token is valid.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+      tags:
+      - api
+  /api/users/change_password/:
+    post:
+      operationId: changePasswordUser
+      description: "\u4FEE\u6539\u5BC6\u7801"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/users/login/:
+    post:
+      operationId: loginUser
+      description: "\u7528\u6237\u767B\u5F55"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-fault/{id}/assign/:
+    post:
+      operationId: assignFaultRecord
+      description: "\u5206\u914D\u6545\u969C\u5904\u7406\u4EBA\u5458"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+  /api/equipment/equipment-fault/{id}/update_status/:
+    post:
+      operationId: updateStatusFaultRecord
+      description: "\u66F4\u65B0\u6545\u969C\u8BB0\u5F55\u72B6\u6001"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u6545\u969C\u8BB0\u5F55\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FaultRecord'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaultRecord'
+          description: ''
+      tags:
+      - api
+  /api/customer/customers/{id}/update_credit_limit/:
+    post:
+      operationId: updateCreditLimitCustomer
+      description: "\u66F4\u65B0\u5BA2\u6237\u4FE1\u7528\u989D\u5EA6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5BA2\u6237."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - api
+  /api/customer/task-reminders/{id}/complete_task/:
+    post:
+      operationId: completeTaskTaskReminder
+      description: "\u5B8C\u6210\u4EFB\u52A1"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4EFB\u52A1\u63D0\u9192\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskReminder'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskReminder'
+          description: ''
+      tags:
+      - api
+  /api/employee/employees/{id}/change_status/:
+    post:
+      operationId: changeStatusEmployee
+      description: "\u66F4\u6539\u5458\u5DE5\u72B6\u6001"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5458\u5DE5."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: ''
+      tags:
+      - api
+  /api/employee/attendance/check_in/:
+    post:
+      operationId: checkInAttendance
+      description: "\u5458\u5DE5\u6253\u5361"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+      tags:
+      - api
+  /api/finance/factory-settlements/{id}/approve/:
+    post:
+      operationId: approveFactorySettlement
+      description: "\u5BA1\u6838\u7ED3\u7B97\u5355"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5DE5\u5382\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FactorySettlement'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactorySettlement'
+          description: ''
+      tags:
+      - api
+  /api/finance/outsource-settlements/{id}/approve/:
+    post:
+      operationId: approveOutsourceSettlement
+      description: "\u5BA1\u6838\u7ED3\u7B97\u5355"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u5916\u53D1\u7ED3\u7B97\
+          \u5355."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OutsourceSettlement'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutsourceSettlement'
+          description: ''
+      tags:
+      - api
+  /api/finance/payments/{id}/complete_payment/:
+    post:
+      operationId: completePaymentPayment
+      description: "\u5B8C\u6210\u4ED8\u6B3E"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4ED8\u6B3E\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+      tags:
+      - api
+  /api/production/orders/{id}/change_status/:
+    post:
+      operationId: changeStatusOrder
+      description: "\u66F4\u6539\u8BA2\u5355\u72B6\u6001"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u8BA2\u5355."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+      - api
+  /api/production/production-plans/{id}/update_progress/:
+    post:
+      operationId: updateProgressProductionPlan
+      description: "\u66F4\u65B0\u751F\u4EA7\u8FDB\u5EA6"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u8BA1\u5212\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionPlan'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionPlan'
+          description: ''
+      tags:
+      - api
+  /api/production/cutting-tasks/{id}/complete_task/:
+    post:
+      operationId: completeTaskCuttingTask
+      description: "\u5B8C\u6210\u4EFB\u52A1"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+  /api/production/cutting-tasks/{id}/start_task/:
+    post:
+      operationId: startTaskCuttingTask
+      description: "\u5F00\u59CB\u4EFB\u52A1"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u88C1\u526A\u4EFB\u52A1\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CuttingTask'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuttingTask'
+          description: ''
+      tags:
+      - api
+  /api/production/exceptions/{id}/resolve_exception/:
+    post:
+      operationId: resolveExceptionProductionException
+      description: "\u89E3\u51B3\u5F02\u5E38"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u5F02\u5E38\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductionException'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductionException'
+          description: ''
+      tags:
+      - api
+  /api/production/batches/{id}/record_quality_check/:
+    post:
+      operationId: recordQualityCheckBatch
+      description: "\u8BB0\u5F55\u8D28\u68C0\u7ED3\u679C"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+  /api/production/batches/{id}/update_status/:
+    post:
+      operationId: updateStatusBatch
+      description: "\u66F4\u65B0\u6279\u6B21\u72B6\u6001"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u751F\u4EA7\u6279\u6B21\
+          ."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Batch'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+          description: ''
+      tags:
+      - api
+  /api/supplier/suppliers/{id}/change_status/:
+    post:
+      operationId: changeStatusSupplier
+      description: "\u66F4\u6539\u4F9B\u5E94\u5546\u72B6\u6001"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+      tags:
+      - api
+  /api/supplier/contracts/{id}/activate_contract/:
+    post:
+      operationId: activateContractSupplierContract
+      description: "\u6FC0\u6D3B\u5408\u540C"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u4F9B\u5E94\u5546\u5408\
+          \u540C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierContract'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierContract'
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    UserList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: "\u5FC5\u586B\uFF1B\u957F\u5EA6\u4E3A150\u4E2A\u5B57\u7B26\u6216\
+            \u4EE5\u4E0B\uFF1B\u53EA\u80FD\u5305\u542B\u5B57\u6BCD\u3001\u6570\u5B57\
+            \u3001\u7279\u6B8A\u5B57\u7B26\u201C@\u201D\u3001\u201C.\u201D\u3001\u201C\
+            -\u201D\u548C\u201C_\u201D\u3002"
+        email:
+          type: string
+          format: email
+          readOnly: true
+        is_active:
+          type: boolean
+          readOnly: true
+          description: "\u6307\u660E\u7528\u6237\u662F\u5426\u88AB\u8BA4\u4E3A\u662F\
+            \u6D3B\u8DC3\u7684\u3002\u4EE5\u53CD\u9009\u4EE3\u66FF\u5220\u9664\u5E10\
+            \u53F7\u3002"
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: "\u5FC5\u586B\uFF1B\u957F\u5EA6\u4E3A150\u4E2A\u5B57\u7B26\u6216\
+            \u4EE5\u4E0B\uFF1B\u53EA\u80FD\u5305\u542B\u5B57\u6BCD\u3001\u6570\u5B57\
+            \u3001\u7279\u6B8A\u5B57\u7B26\u201C@\u201D\u3001\u201C.\u201D\u3001\u201C\
+            -\u201D\u548C\u201C_\u201D\u3002"
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        confirm_password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        is_active:
+          type: boolean
+          description: "\u6307\u660E\u7528\u6237\u662F\u5426\u88AB\u8BA4\u4E3A\u662F\
+            \u6D3B\u8DC3\u7684\u3002\u4EE5\u53CD\u9009\u4EE3\u66FF\u5220\u9664\u5E10\
+            \u53F7\u3002"
+      required:
+      - username
+      - password
+      - confirm_password
+    Equipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        equipment_type:
+          enum:
+          - production
+          - testing
+          - packaging
+          - other
+          type: string
+        model_number:
+          type: string
+          maxLength: 50
+        serial_number:
+          type: string
+          maxLength: 50
+        manufacturer:
+          type: string
+          maxLength: 100
+        purchase_date:
+          type: string
+          format: date
+        warranty_period:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        location:
+          type: string
+          maxLength: 100
+        status:
+          enum:
+          - normal
+          - maintenance
+          - malfunction
+          - scrapped
+          type: string
+        specifications:
+          type: string
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        responsible_person:
+          type: integer
+      required:
+      - name
+      - equipment_type
+      - model_number
+      - serial_number
+      - manufacturer
+      - purchase_date
+      - warranty_period
+      - location
+      - responsible_person
+    MaintenanceRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        maintenance_type:
+          enum:
+          - routine
+          - repair
+          - inspection
+          - upgrade
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        maintenance_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 100000000
+          minimum: -100000000
+        parts_replaced:
+          type: string
+          nullable: true
+        maintenance_details:
+          type: string
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        equipment:
+          type: integer
+        performed_by:
+          type: integer
+        verified_by:
+          type: integer
+          nullable: true
+      required:
+      - maintenance_type
+      - start_time
+      - maintenance_details
+      - equipment
+      - performed_by
+    FaultRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        fault_time:
+          type: string
+          format: date-time
+        description:
+          type: string
+        status:
+          enum:
+          - reported
+          - processing
+          - resolved
+          - closed
+          type: string
+        solution:
+          type: string
+          nullable: true
+        resolved_time:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        equipment:
+          type: integer
+        repair_person:
+          type: integer
+      required:
+      - fault_time
+      - description
+      - equipment
+      - repair_person
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        contact_person:
+          type: string
+          maxLength: 50
+        contact_phone:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        address:
+          type: string
+          maxLength: 200
+        level:
+          enum:
+          - vip
+          - regular
+          - potential
+          type: string
+        credit_limit:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        account_receivable:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        created_by:
+          type: integer
+      required:
+      - name
+      - contact_person
+      - contact_phone
+      - address
+      - created_by
+    TaskReminder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 100
+        content:
+          type: string
+        priority:
+          enum:
+          - high
+          - medium
+          - low
+          type: string
+        status:
+          enum:
+          - pending
+          - processing
+          - completed
+          - cancelled
+          type: string
+        due_date:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        customer:
+          type: integer
+        assigned_to:
+          type: integer
+        completed_by:
+          type: integer
+          nullable: true
+        created_by:
+          type: integer
+      required:
+      - title
+      - content
+      - due_date
+      - customer
+      - assigned_to
+      - created_by
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        employee_number:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 50
+        gender:
+          type: string
+          maxLength: 10
+        birth_date:
+          type: string
+          format: date
+        id_card:
+          type: string
+          maxLength: 18
+        phone:
+          type: string
+          maxLength: 11
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        address:
+          type: string
+          maxLength: 200
+        education:
+          enum:
+          - high_school
+          - college
+          - bachelor
+          - master
+          - doctor
+          type: string
+        department:
+          type: string
+          maxLength: 50
+        position:
+          type: string
+          maxLength: 50
+        hire_date:
+          type: string
+          format: date
+        status:
+          enum:
+          - active
+          - resigned
+          - suspended
+          type: string
+        bank_name:
+          type: string
+          maxLength: 100
+        bank_account:
+          type: string
+          maxLength: 50
+        emergency_contact:
+          type: string
+          maxLength: 50
+        emergency_phone:
+          type: string
+          maxLength: 11
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        created_by:
+          type: integer
+      required:
+      - employee_number
+      - name
+      - gender
+      - birth_date
+      - id_card
+      - phone
+      - address
+      - education
+      - department
+      - position
+      - hire_date
+      - bank_name
+      - bank_account
+      - emergency_contact
+      - emergency_phone
+      - created_by
+    Attendance:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        attendance_date:
+          type: string
+          format: date
+        attendance_type:
+          enum:
+          - check_in
+          - check_out
+          - break_start
+          - break_end
+          type: string
+        attendance_time:
+          type: string
+          format: date-time
+        status:
+          enum:
+          - normal
+          - late
+          - early_leave
+          - absent
+          - overtime
+          type: string
+        location:
+          type: string
+          nullable: true
+          maxLength: 200
+        device:
+          type: string
+          nullable: true
+          maxLength: 100
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        employee:
+          type: integer
+      required:
+      - attendance_date
+      - attendance_type
+      - attendance_time
+      - employee
+    PerformanceEvaluation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        evaluation_period:
+          enum:
+          - monthly
+          - quarterly
+          - yearly
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        work_quality_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        work_efficiency_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        responsibility_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        teamwork_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        innovation_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        total_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        result:
+          enum:
+          - excellent
+          - good
+          - fair
+          - poor
+          type: string
+        achievements:
+          type: string
+        improvements:
+          type: string
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        employee:
+          type: integer
+        evaluator:
+          type: integer
+        reviewed_by:
+          type: integer
+          nullable: true
+      required:
+      - evaluation_period
+      - start_date
+      - end_date
+      - work_quality_score
+      - work_efficiency_score
+      - responsibility_score
+      - teamwork_score
+      - innovation_score
+      - total_score
+      - result
+      - achievements
+      - improvements
+      - employee
+      - evaluator
+    FactorySettlement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        settlement_number:
+          type: string
+          maxLength: 50
+        settlement_amount:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        settlement_date:
+          type: string
+          format: date
+        payment_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          enum:
+          - pending
+          - approved
+          - paid
+          - cancelled
+          type: string
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        production_plan:
+          type: integer
+        approved_by:
+          type: integer
+          nullable: true
+        created_by:
+          type: integer
+      required:
+      - settlement_number
+      - settlement_amount
+      - settlement_date
+      - production_plan
+      - created_by
+    OutsourceSettlement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        settlement_number:
+          type: string
+          maxLength: 50
+        settlement_amount:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        settlement_date:
+          type: string
+          format: date
+        payment_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          enum:
+          - pending
+          - approved
+          - paid
+          - cancelled
+          type: string
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        supplier:
+          type: integer
+        order:
+          type: integer
+        approved_by:
+          type: integer
+          nullable: true
+        created_by:
+          type: integer
+      required:
+      - settlement_number
+      - settlement_amount
+      - settlement_date
+      - supplier
+      - order
+      - created_by
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        payment_number:
+          type: string
+          maxLength: 50
+        payment_type:
+          enum:
+          - factory
+          - outsource
+          - material
+          - other
+          type: string
+        amount:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        planned_date:
+          type: string
+          format: date
+        actual_date:
+          type: string
+          format: date
+          nullable: true
+        payee:
+          type: string
+          maxLength: 100
+        bank_account:
+          type: string
+          maxLength: 50
+        bank_name:
+          type: string
+          maxLength: 100
+        status:
+          enum:
+          - planned
+          - processing
+          - completed
+          - cancelled
+          type: string
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        approved_by:
+          type: integer
+          nullable: true
+        created_by:
+          type: integer
+      required:
+      - payment_number
+      - payment_type
+      - amount
+      - planned_date
+      - payee
+      - bank_account
+      - bank_name
+      - created_by
+    CostCalculation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        material_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        labor_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        overhead_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        outsource_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        logistics_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        other_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        total_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        unit_cost:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 100000000
+          minimum: -100000000
+        gross_profit:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        gross_profit_rate:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        calculation_date:
+          type: string
+          format: date
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        order:
+          type: integer
+        created_by:
+          type: integer
+      required:
+      - material_cost
+      - labor_cost
+      - overhead_cost
+      - total_cost
+      - unit_cost
+      - gross_profit
+      - gross_profit_rate
+      - calculation_date
+      - order
+      - created_by
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          maxLength: 50
+        product_name:
+          type: string
+          maxLength: 100
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        unit_price:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 100000000
+          minimum: -100000000
+        total_amount:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        delivery_date:
+          type: string
+          format: date
+        status:
+          enum:
+          - pending
+          - processing
+          - completed
+          - cancelled
+          type: string
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        customer:
+          type: integer
+        created_by:
+          type: integer
+      required:
+      - order_number
+      - product_name
+      - quantity
+      - unit_price
+      - total_amount
+      - delivery_date
+      - customer
+      - created_by
+    ProductionPlan:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        plan_number:
+          type: string
+          maxLength: 50
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        status:
+          enum:
+          - planned
+          - in_progress
+          - completed
+          - delayed
+          type: string
+        actual_start_date:
+          type: string
+          format: date
+          nullable: true
+        actual_end_date:
+          type: string
+          format: date
+          nullable: true
+        progress:
+          type: number
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        order:
+          type: integer
+        responsible_person:
+          type: integer
+      required:
+      - plan_number
+      - start_date
+      - end_date
+      - order
+      - responsible_person
+    CuttingTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        task_number:
+          type: string
+          maxLength: 50
+        material:
+          type: string
+          maxLength: 100
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          enum:
+          - pending
+          - processing
+          - completed
+          type: string
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        production_plan:
+          type: integer
+        assigned_to:
+          type: integer
+      required:
+      - task_number
+      - material
+      - quantity
+      - production_plan
+      - assigned_to
+    ProductionException:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        exception_type:
+          type: string
+          maxLength: 50
+        severity:
+          enum:
+          - low
+          - medium
+          - high
+          type: string
+        description:
+          type: string
+        solution:
+          type: string
+          nullable: true
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        production_plan:
+          type: integer
+        reported_by:
+          type: integer
+      required:
+      - exception_type
+      - severity
+      - description
+      - production_plan
+      - reported_by
+    Batch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        batch_number:
+          type: string
+          maxLength: 50
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          enum:
+          - created
+          - in_production
+          - completed
+          - quality_check
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        quality_check_result:
+          type: string
+          nullable: true
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        production_plan:
+          type: integer
+      required:
+      - batch_number
+      - quantity
+      - start_date
+      - end_date
+      - production_plan
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        supplier_type:
+          enum:
+          - material
+          - outsource
+          - equipment
+          - other
+          type: string
+        contact_person:
+          type: string
+          maxLength: 50
+        contact_phone:
+          type: string
+          maxLength: 20
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        address:
+          type: string
+          maxLength: 200
+        business_license:
+          type: string
+          maxLength: 50
+        tax_number:
+          type: string
+          maxLength: 50
+        bank_name:
+          type: string
+          maxLength: 100
+        bank_account:
+          type: string
+          maxLength: 50
+        credit_limit:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        payment_terms:
+          type: string
+          maxLength: 200
+        status:
+          enum:
+          - active
+          - suspended
+          - terminated
+          type: string
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        created_by:
+          type: integer
+      required:
+      - name
+      - supplier_type
+      - contact_person
+      - contact_phone
+      - address
+      - business_license
+      - tax_number
+      - bank_name
+      - bank_account
+      - payment_terms
+      - created_by
+    SupplierPerformance:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        evaluation_date:
+          type: string
+          format: date
+        quality_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        delivery_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        price_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        service_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        total_score:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 1000
+          minimum: -1000
+        evaluation_content:
+          type: string
+        improvement_suggestions:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        supplier:
+          type: integer
+        evaluated_by:
+          type: integer
+      required:
+      - evaluation_date
+      - quality_score
+      - delivery_score
+      - price_score
+      - service_score
+      - total_score
+      - evaluation_content
+      - supplier
+      - evaluated_by
+    SupplierContract:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        contract_number:
+          type: string
+          maxLength: 50
+        contract_name:
+          type: string
+          maxLength: 100
+        contract_type:
+          type: string
+          maxLength: 50
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        status:
+          enum:
+          - draft
+          - active
+          - expired
+          - terminated
+          type: string
+        contract_file:
+          type: string
+          format: binary
+        amount:
+          type: string
+          format: decimal
+          multipleOf: 0.01
+          maximum: 10000000000
+          minimum: -10000000000
+        payment_terms:
+          type: string
+        remarks:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
+        supplier:
+          type: integer
+        created_by:
+          type: integer
+      required:
+      - contract_number
+      - contract_name
+      - contract_type
+      - start_date
+      - end_date
+      - contract_file
+      - amount
+      - payment_terms
+      - supplier
+      - created_by
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - username
+      - password
+    TokenRefresh:
+      type: object
+      properties:
+        refresh:
+          type: string
+        access:
+          type: string
+          readOnly: true
+      required:
+      - refresh
